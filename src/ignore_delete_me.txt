@@ -1,0 +1,1 @@
+Arquivo temporário para forçar a exclusão do store Zustand. Pode ser removido após a exclusão do arquivo useAppStore.ts.
