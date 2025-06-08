@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Image from "next/image";
 
+
 export default function CadastroPage() {
   const router = useRouter();
   const [nome, setNome] = useState("");
