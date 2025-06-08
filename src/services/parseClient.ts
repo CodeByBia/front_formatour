@@ -6,7 +6,8 @@ import Parse from './parseSetup';
 
 // resolvidoo bug do body vaizo
 let mockUser = {
-  id: 3,
+  
+  id: 1,
   name: 'Usuário Padrão',
   email: 'usuario@exemplo.com',
 };
