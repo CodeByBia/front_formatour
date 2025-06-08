@@ -6,7 +6,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const Course = Parse.Object.extend('Course');
     const query = new Parse.Query(Course);
     const results = await query.find();
-    const courses = results.map((c: any) => ({
+    type CourseType = Parse.Object & {
+      id: string;
+      get: <T extends keyof { title: string; description: string; image: string; category: string }>(key: T) => string;
+    };
+    const courses = results.map((c: CourseType) => ({
       id: c.id,
       title: c.get('title'),
       description: c.get('description'),

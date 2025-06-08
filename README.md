@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Getting Started  
 
 First, run the development server:
 
@@ -16,8 +16,8 @@ bun dev
 ## Dependências 
 
 - npm install
-- 
-
+- npm install -g ts-node.
+- npm install --save-dev typescript ts-node
 
 ## Tipos de Commits
 O commit possui os elementos estruturais abaixo (tipos), que informam a intenção do seu commit ao utilizador(a) de seu código.
