@@ -7,50 +7,60 @@ export interface Course {
   image?: string;
   category?: string;
   enrolled?: boolean;
+  enrollmentId?: string;
 }
 
 export const courseService = {
   async listCourses(): Promise<Course[]> {
-    const res = await fetch('/api/courses', { method: 'GET' });
+    const res = await fetch("/api/courses", { method: "GET" });
     if (!res.ok) {
-      console.error('Erro ao buscar cursos:', res.status, await res.text());
+      const errorText = await res.text();
+      console.error("Erro ao buscar cursos:", res.status, errorText);
       return [];
     }
     const courses: Course[] = await res.json();
-    const enrollmentsRes = await fetch('/api/enrollments', { method: 'GET' });
+    const enrollmentsRes = await fetch("/api/enrollments", { method: "GET" });
     if (!enrollmentsRes.ok) {
-      console.error('Erro ao buscar enrollments:', enrollmentsRes.status, await enrollmentsRes.text());
+      console.error(
+        "Erro ao buscar enrollments:",
+        enrollmentsRes.status,
+        await enrollmentsRes.text()
+      );
       return courses.map((c) => ({ ...c, enrolled: false }));
     }
-    const enrolledCourseIds: string[] = await enrollmentsRes.json();
-    return courses.map((c) => ({
-      ...c,
-      enrolled: Array.isArray(enrolledCourseIds) && enrolledCourseIds.includes(c.id),
-    }));
+    const enrolled: { courseId: string; enrollmentId: string }[] = await enrollmentsRes.json();
+    return courses.map((c) => {
+      const found = Array.isArray(enrolled) ? enrolled.find(e => e.courseId === c.id) : undefined;
+      return {
+        ...c,
+        enrolled: !!found,
+        enrollmentId: found ? found.enrollmentId : undefined
+      };
+    });
   },
   async enroll(courseId: string): Promise<boolean> {
-    const res = await fetch('/api/enrollments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/enrollments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ courseId }),
     });
     if (!res.ok) {
       const err = await res.text();
-      console.error('Erro ao inscrever:', res.status, err);
-      throw new Error('Erro ao inscrever: ' + err);
+      console.error("Erro ao inscrever:", res.status, err);
+      throw new Error("Erro ao inscrever: " + err);
     }
     return true;
   },
   async unenroll(courseId: string): Promise<boolean> {
-    const res = await fetch('/api/enrollments', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/enrollments", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ courseId }),
     });
     if (!res.ok) {
       const err = await res.text();
-      console.error('Erro ao desinscrever:', res.status, err);
-      throw new Error('Erro ao desinscrever: ' + err);
+      console.error("Erro ao desinscrever:", res.status, err);
+      throw new Error("Erro ao desinscrever: " + err);
     }
     return true;
   },

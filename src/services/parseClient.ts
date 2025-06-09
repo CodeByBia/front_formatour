@@ -4,6 +4,14 @@
 // Troque o mock pelo Parse real
 import Parse from './parseSetup';
 
+// resolvidoo bug do body vaizo
+let mockUser = {
+  
+  id: 1,
+  name: 'Usuário Padrão',
+  email: 'usuario@exemplo.com',
+};
+
 export const parseClient = {
   // Métodos simulados para integração futura com Back4App
   get: async (url: string, params?: Record<string, unknown>) => {
@@ -40,14 +48,27 @@ export const parseClient = {
     }
     return { data: null };
   },
-  put: async (url: string, body: Record<string, unknown>) => {
-    // Exemplo: atualizar usuário
+ 
+ put: async (url: string, body: Record<string, unknown>) => {
+    console.log('Dados recebidos para atualização:', body);
+
     if (url === '/users/me') {
-      // Implemente lógica para atualizar usuário logado
-      return { data: { success: true } };
+      // LÓGICA CORRIGIDA:
+      // Usamos o spread operator (...) para mesclar os dados atuais do usuário (`mockUser`)
+      // com os novos dados que chegaram no `body`.
+      // Propriedades existentes são atualizadas e novas são adicionadas.
+      mockUser = { ...mockUser, ...body };
+
+      // RETORNO CORRIGIDO:
+      // Retornamos o objeto do usuário completo e atualizado.
+      // Isso é uma prática comum em APIs.
+      return { data: mockUser };
     }
+
+    // Mantém o retorno padrão para outras URLs não implementadas
     return { data: null };
   },
+
   delete: async (url: string, body?: Record<string, unknown>) => {
     if (url.startsWith('/unenroll/')) {
       const courseId = url.split('/').pop();

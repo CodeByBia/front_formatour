@@ -41,9 +41,11 @@ export default function Carousel({ title, courses, onUnenroll }: CarouselProps) 
         {courses.slice(start, start + visible).map((course, idx) => (
           <div key={course.id || idx}>
             <CourseCard
-              image={course.image}
+              id={course.id}
+              image={course.image || ""}
               title={course.title}
               category={course.category || ''}
+              enrollmentId={course.enrollmentId}
             />
             {onUnenroll && course.enrolled && (
               <CourseActions
@@ -58,3 +60,8 @@ export default function Carousel({ title, courses, onUnenroll }: CarouselProps) 
     </section>
   );
 }
+
+
+// crud 
+// gerenciamento estado global 
+// css completo

@@ -15,7 +15,7 @@ export default function Home() {
 		async function fetchCourses() {
 			setIsLoading(true);
 			const all = await courseService.listCourses();
-			setUserCourses(ll.filter((c: Course) => c.enrolled));
+			setUserCourses(all.filter((c: Course) => c.enrolled));
 			setNewCourses(all.filter((c: Course) => !c.enrolled));
 			setIsLoading(false);
 		}
