@@ -17,8 +17,10 @@ export const userService = {
   async updateUser(data: Partial<User>): Promise<void> {
     await fetch('/api/user', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     });
   },
 };

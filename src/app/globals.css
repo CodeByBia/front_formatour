@@ -1,8 +1,12 @@
+/* src/app/globals.css */
+
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --scrollbar-thumb-color: #395d08;
+  --scrollbar-track-color: #ffffff; 
 }
 
 :root {
@@ -60,3 +64,30 @@ label {
 .shadow-sm {
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.04);
 }
+
+
+html::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; 
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+  border-radius: 10px;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color); 
+  border-radius: 10px;
+  border: 1px solid var(--scrollbar-track-color); 
+}
+
+html::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track-color);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
