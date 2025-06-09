@@ -10,22 +10,22 @@ export interface Course {
 }
 
 export const courseService = {
-  async listCourses(): Promise<Course[]> {
-    const res = await fetch('/api/courses', { method: 'GET' });
-    if (!res.ok) {
-      console.error('Erro ao buscar cursos:', res.status, await res.text());
+async getAllCourses(): Promise<Course[]> {
+    const courseResponse = await fetch('/api/courses', { method: 'GET' });
+    if (!courseResponse.ok) {
+      console.error('Falha ao obter lista de cursos:', courseResponse.status, await courseResponse.text());
       return [];
     }
-    const courses: Course[] = await res.json();
-    const enrollmentsRes = await fetch('/api/enrollments', { method: 'GET' });
-    if (!enrollmentsRes.ok) {
-      console.error('Erro ao buscar enrollments:', enrollmentsRes.status, await enrollmentsRes.text());
-      return courses.map((c) => ({ ...c, enrolled: false }));
+    const courseList: Course[] = await courseResponse.json();
+    const userEnrollments = await fetch('/api/enrollments', { method: 'GET' });
+    if (!userEnrollments.ok) {
+      console.error('Falha ao obter inscrições:', userEnrollments.status, await userEnrollments.text());
+      return courseList.map((course) => ({ ...course, enrolled: false }));
     }
-    const enrolledCourseIds: string[] = await enrollmentsRes.json();
-    return courses.map((c) => ({
-      ...c,
-      enrolled: Array.isArray(enrolledCourseIds) && enrolledCourseIds.includes(c.id),
+    const enrolledIds: string[] = await userEnrollments.json();
+    return courseList.map((course) => ({
+      ...course,
+      enrolled: Array.isArray(enrolledIds) ? enrolledIds.includes(course.id) : false,
     }));
   },
   async enroll(courseId: string): Promise<boolean> {
