@@ -31,8 +31,8 @@ export default function CadastroPage() {
                 value={nome}
                 onChange={e => setNome(e.target.value)}
                 placeholder="Nome completo"
-              />
-            </div>
+            
+
             <div className="flex flex-col gap-1">
               <label className="text-[#3B5D46] text-sm font-semibold" htmlFor="email">Email</label>
               <input
@@ -44,6 +44,7 @@ export default function CadastroPage() {
                 placeholder="Roberttoalves@gmail.com"
               />
             </div>
+
             <div className="flex flex-col gap-1">
               <label className="text-[#3B5D46] text-sm font-semibold" htmlFor="senha">Senha</label>
               <div className="relative">
