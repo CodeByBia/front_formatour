@@ -21,6 +21,8 @@ export default function CourseCard({ image, title, category, progress }: Omit<Co
             {category}
           </div>
         </div>
+
+        {/* deveria estar em inscrição */}
         {progress !== undefined ? (
           <div className="flex items-center mt-2">
             <input type="range" value={progress} readOnly className="flex-1 accent-green-500" />
