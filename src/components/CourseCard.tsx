@@ -9,14 +9,15 @@ import React from 'react';
 // O componente <Image> foi substituído por uma tag <img> padrão.
 
 interface CourseCardProps {
-  id: string; 
+  id: string;
   image: string;
   title: string;
   category: string;
   progress?: number;
+  enrollmentId?: string;
 }
 
-export default function CourseCard({ image, title, category, progress }: Omit<CourseCardProps, 'onView'>) {
+export default function CourseCard({ id, image, title, category, progress, enrollmentId }: Omit<CourseCardProps, 'onView'>) {
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col border border-gray-200">
       <img src={image} alt={title} className="w-full h-32 object-cover" />
@@ -34,8 +35,8 @@ export default function CourseCard({ image, title, category, progress }: Omit<Co
             <span className="ml-2 text-xs text-black">{progress}%</span>
           </div>
         ) : null}
-        <a
-          href="/detalhe-curso"
+       <a
+           href={`/detalhe-curso?id=${enrollmentId ?? id}`}
           className="mt-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition text-sm flex items-center justify-center"
         >
           Ver <span className="material-icons ml-1 text-base">Ver</span>
