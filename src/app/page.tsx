@@ -14,7 +14,7 @@ export default function Home() {
 	useEffect(() => {
 		async function fetchCourses() {
 			setIsLoading(true);
-			const all = await courseService.listCourses();
+			const all = await courseService.getAllCourses();
 			setUserCourses(all.filter((c: Course) => c.enrolled));
 			setNewCourses(all.filter((c: Course) => !c.enrolled));
 			setIsLoading(false);
@@ -25,7 +25,7 @@ export default function Home() {
 	async function onEnroll(courseId: string) {
 		setIsLoading(true);
 		await courseService.enroll(courseId);
-		const all = await courseService.listCourses();
+		const all = await courseService.getAllCourses();
 		setUserCourses(all.filter((c: Course) => c.enrolled));
 		setNewCourses(all.filter((c: Course) => !c.enrolled));
 		setIsLoading(false);
@@ -34,7 +34,7 @@ export default function Home() {
 	async function onUnenroll(courseId: string) {
 		setIsLoading(true);
 		await courseService.unenroll(courseId);
-		const all = await courseService.listCourses();
+		const all = await courseService.getAllCourses();
 		setUserCourses(all.filter((c: Course) => c.enrolled));
 		setNewCourses(all.filter((c: Course) => !c.enrolled));
 		setIsLoading(false);
