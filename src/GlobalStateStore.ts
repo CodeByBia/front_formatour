@@ -29,7 +29,7 @@ export const { setCourses, setLoading } = courseSlice.actions;
 export interface Course {
     // Define the properties of a course according to your data model
     id: string;
-    name: string;
+    title: string;
     // Add other fields as needed
 }
 

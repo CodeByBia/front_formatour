@@ -38,7 +38,7 @@ export default function CourseCard({ image, title, category, progress }: Omit<Co
           href="/detalhe-curso"
           className="mt-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition text-sm flex items-center justify-center"
         >
-          Ver <span className="material-icons ml-1 text-base">Ver</span>
+        <span className="material-icons ml-1 text-base">Ver</span>
         </a>
       </div>
     </div>
