@@ -36,16 +36,15 @@ export default function PerfilPage() {
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header userName={nome} />
-  
+
         <main className="flex-1 flex flex-col items-center justify-start py-15">
           {loading ? (
             <div>Carregando...</div>
           ) : (
             <div className="w-full max-w-3xl relative">
-          
               <div
                 className="absolute left-0 right-0 h-20 rounded-t-xl bg-gradient-to-r from-lime-100 to-lime-950 z-10"
-                style={{ top: '-40px' }}
+                style={{ top: "-40px" }}
               />
               <div className="w-full bg-white rounded-xl shadow-sm p-8 pt-14 relative z-0">
                 <h2 className="text-2xl font-bold mb-1 text-black">
@@ -55,12 +54,16 @@ export default function PerfilPage() {
                   Aqui você pode gerenciar suas informações.
                 </p>
                 <form onSubmit={handleSave} className="flex flex-col gap-8">
-                  <div className="flex items-center gap-6 mb-4">
-                    <img
-                      src="https://randomuser.me/api/portraits/women/44.jpg"
+                  {/*
+                 <img
+                      src="/personAll.svg"
                       alt="Avatar"
-                      className="w-20 h-20 rounded-full object-cover"
+                      width={20}
+                      height={20}
+                      className="w-12 h-12 bg-lime-700 rounded-full object-cover"
                     />
+                */}{" "}
+                  <div className="flex items-center gap-6 mb-4">
                     <div>
                       <div className="font-semibold text-lg text-black">
                         {nome}
@@ -77,7 +80,6 @@ export default function PerfilPage() {
                       </button>
                     </div>
                   </div>
-
                   <div className="flex flex-col gap-4">
                     <label className="text-sm font-medium text-black">
                       Nome Completo

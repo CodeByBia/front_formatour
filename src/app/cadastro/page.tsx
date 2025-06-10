@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Image from "next/image";
+import { FaEye } from "react-icons/fa";
 
 export default function CadastroPage() {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function CadastroPage() {
     <div className="min-h-screen flex items-center justify-center bg-[#8CA08C] px-2">
       <div className="flex flex-col md:flex-row w-full max-w-4xl md:h-[520px] bg-white rounded-none shadow-lg overflow-hidden">
         <div className="flex-1 flex items-center justify-center bg-[#F3EFEA] min-h-[220px]">
-          <Image src="/file.svg" alt="Van" width={288} height={288} className="w-72 h-72 object-contain" />
+        <Image src="/van.png" alt="Van" width={500} height={500} className="w-500 h-500 object-contain" />
         </div>
         <div className="flex-1 flex flex-col justify-center px-6 md:px-12 py-8">
           <div className="flex flex-col items-center mb-6">
@@ -58,7 +59,9 @@ export default function CadastroPage() {
                   onChange={e => setSenha(e.target.value)}
                   placeholder="********"
                 />
-                <span className="absolute right-3 top-3 text-gray-400 cursor-pointer select-none">👁️</span>
+                <span className="absolute right-3 top-3 text-gray-400 cursor-pointer select-none">
+                  <FaEye/>
+                </span>
               </div>
             </div>
             <div className="flex flex-col md:flex-row gap-4 mt-6">
