@@ -1,5 +1,4 @@
 import React from 'react';
-import {FaRegUserCircle } from 'react-icons/fa';
 
 export default function Header({ userName }: { userName: string }) {
   return (

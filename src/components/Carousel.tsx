@@ -3,7 +3,6 @@ import React from "react";
 import CourseCard from "./CourseCard";
 import CourseActions from "./CourseActions";
 import { Course } from "../services/courseService";
-import styles from "./Carousel.module.css";
 
 interface CarouselProps {
   title: string;
@@ -54,7 +53,10 @@ export default function Carousel({ title, courses, onUnenroll }: CarouselProps) 
       <div className="overflow-x-auto w-full">
         <div className="flex gap-6 min-w-full" style={{scrollSnapType:'x mandatory'}}>
           {courses.slice(start, start + visible).map((course, idx) => (
-            <div className={styles.seusCursos} key={course.id || idx} style={{scrollSnapAlign:'start', minWidth: 320}}>
+            <div
+              key={course.id || idx}
+              style={{scrollSnapAlign:'start', minWidth: 320}}
+            >
               <CourseCard 
                 id={course.id}
                 image={course.image || ""}
