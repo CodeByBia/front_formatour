@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { enrollmentService } from "../../services/enrollmentService";
+import styles from "./DetalheCurso.module.css";
 
 // colocar o caminho correto do serviço de cursos
 const details = {
@@ -13,11 +14,12 @@ const details = {
   description:
     "Os participantes aprenderão sobre a importância da valorização da cultura local, técnicas de mediação cultural, e como oferecer experiências autênticas para visitantes. Ideal para quem atua como guia turístico, agente de turismo ou profissional de eventos culturais.",
   infos: [
-    { icon: "flag", color: "bg-red-100 text-red-700", label: "8 Horas" },
-    { icon: "assignment", color: "bg-blue-100 text-blue-700", label: "Exercícios ao final das aulas" },
-    { icon: "category", color: "bg-yellow-100 text-yellow-700", label: "Turismo e Cultura" },
-    { icon: "event", color: "bg-green-100 text-green-700", label: "Data de início: 15/05/2025" },
-    { icon: "link", color: "bg-blue-100 text-blue-700", label: "Material de apoio: Link" },
+    { icon: "", color: "bg-red-100 text-red-700", label: "8 Horas" },
+    { icon: "", color: "bg-blue-100 text-blue-700", label: "Exercícios ao final das aulas" },
+    { icon: "", color: "bg-yellow-100 text-yellow-700", label: "Turismo e Cultura" },
+    { icon: "", color: "bg-green-100 text-green-700", label: "Data de início: 15/05/2025" },
+    { icon: "", color: "bg-purple-100 text-purple-700", label: "Data de término: 15/06/2025" },
+    { icon: "", color: "bg-pink-100 text-pink-700", label: "Certificado de conclusão" },
   ],
   image: "/file.svg", // Substitua pelo caminho correto da imagem do curso
   teacher: {
@@ -68,6 +70,7 @@ export default function DetalheCurso() {
   return (
     <div className="min-h-screen flex bg-[#eae5e0]">
       <Sidebar />
+      
       <div className="flex-1 flex flex-col">
         <Header userName="Paula" />
         <main className="flex-1 flex flex-col items-center justify-center p-8">
@@ -100,12 +103,18 @@ export default function DetalheCurso() {
                     />
                     Aula
                   </label>
-                  <button
-                    className={`px-8 py-2 rounded text-white font-semibold text-lg ${aulaChecked ? "bg-green-600 hover:bg-green-700" : "bg-gray-400 cursor-not-allowed"}`}
-                    disabled={!aulaChecked || loading}
-                    onClick={handleFinalizar}
-                  >
-                    Finalizar Curso
+
+
+               
+      <button
+        className={`${styles.finalizarButton} ${
+          aulaChecked ? styles.active : styles.disabled
+        }`}
+        disabled={!aulaChecked || loading}
+        onClick={handleFinalizar}
+      >
+        Finalizar Curso
+
                   </button>
                 </div>
               </div>
