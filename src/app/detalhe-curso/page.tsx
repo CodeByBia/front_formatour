@@ -1,3 +1,5 @@
+// File: src/app/detalhe-curso/page.tsx
+
 "use client";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";

@@ -1,3 +1,5 @@
+// NewCourses.tsx
+
 "use client";
 import React from "react";
 import CourseCard from "./CourseCard";
@@ -17,6 +19,7 @@ export default function NewCourses({ courses, onEnroll }: NewCoursesProps) {
         {courses.map((course, idx) => (
           <div key={course.id || idx}>
             <CourseCard
+              id={course.id}
               image={course.image || ""}
               title={course.title}
               category={course.category || ""}

@@ -1,3 +1,6 @@
+
+// File: src/app/page.tsx
+
 "use client";
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
@@ -5,6 +8,7 @@ import Header from "../components/Header";
 import Carousel from "../components/Carousel";
 import NewCourses from "../components/NewCourses";
 import { courseService, Course } from "../services/courseService";
+import CourseList from "../components/CourseList";
 
 export default function Home() {
 	const [userCourses, setUserCourses] = useState<Course[]>([]);
@@ -41,6 +45,7 @@ export default function Home() {
 	}
 
 	return (
+		
 		<div className="min-h-screen flex bg-[#eae5e0]">
 			<Sidebar />
 			<div className="flex-1 flex flex-col">
@@ -53,9 +58,18 @@ export default function Home() {
 							<Carousel title="Seus cursos" courses={userCourses} onUnenroll={onUnenroll} />
 							<NewCourses courses={newCourses} onEnroll={onEnroll} />
 						</>
-					)}
+					)}<div className="container mx-auto p-6">
+            <h1 className="text-3xl font-bold">Todos os Cursos</h1>
+            {isLoading ? (
+                <p>Carregando cursos...</p>
+            ) : (
+				<CourseList courses={newCourses} title="Lista de Cursos Disponíveis" />
+            )}
+        </div>
 				</main>
 			</div>
+			 
+
 		</div>
 	);
 }
