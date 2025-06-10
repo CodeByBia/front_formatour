@@ -54,15 +54,7 @@ export default function PerfilPage() {
                   Aqui você pode gerenciar suas informações.
                 </p>
                 <form onSubmit={handleSave} className="flex flex-col gap-8">
-                  {/*
-                 <img
-                      src="/personAll.svg"
-                      alt="Avatar"
-                      width={20}
-                      height={20}
-                      className="w-12 h-12 bg-lime-700 rounded-full object-cover"
-                    />
-                */}{" "}
+              
                   <div className="flex items-center gap-6 mb-4">
                     <div>
                       <div className="font-semibold text-lg text-black">
@@ -74,7 +66,7 @@ export default function PerfilPage() {
                     <div className="absolute justify-end ml-150">
                       <button
                         type="submit"
-                        className="bg-lime-600 text-white px-6 py-2 rounded hover:bg-emerald-950 transition focus:outline-none focus:ring-2 focus:ring-black"
+                        className="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition focus:outline-none focus:ring-2 focus:ring-black"
                       >
                         <span className="text-white">Salvar </span>
                       </button>
@@ -116,7 +108,7 @@ export default function PerfilPage() {
                 <div className="flex items-center gap-2 mt-8">
                   <button
                     onClick={handleLogout}
-                    className="bg-lime-600 rounded-full w-12 h-12 flex items-center justify-center hover:bg-emerald-950 transition focus:outline-none focus:ring-1 focus:ring-black"
+                    className="bg-green-700 rounded-full w-12 h-12 flex items-center justify-center hover:bg-green-800 transition focus:outline-none focus:ring-1 focus:ring-black"
                   >
                     <Image
                       priority

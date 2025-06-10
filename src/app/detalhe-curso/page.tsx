@@ -1,31 +1,29 @@
-// File: src/app/detalhe-curso/page.tsx
-
 "use client";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { enrollmentService } from "../../services/enrollmentService";
+import { FaRegClock, FaClipboardCheck, FaMapMarkedAlt, FaCalendarAlt, FaCalendarCheck, FaCertificate } from "react-icons/fa";
 import styles from "./DetalheCurso.module.css";
 
-// colocar o caminho correto do serviço de cursos
+
 const details = {
   title: "Introdução ao Turismo Cultural no Brasil",
   description:
     "Os participantes aprenderão sobre a importância da valorização da cultura local, técnicas de mediação cultural, e como oferecer experiências autênticas para visitantes. Ideal para quem atua como guia turístico, agente de turismo ou profissional de eventos culturais.",
   infos: [
-    { icon: "", color: "bg-red-100 text-red-700", label: "8 Horas" },
-    { icon: "", color: "bg-blue-100 text-blue-700", label: "Exercícios ao final das aulas" },
-    { icon: "", color: "bg-yellow-100 text-yellow-700", label: "Turismo e Cultura" },
-    { icon: "", color: "bg-green-100 text-green-700", label: "Data de início: 15/05/2025" },
-    { icon: "", color: "bg-purple-100 text-purple-700", label: "Data de término: 15/06/2025" },
-    { icon: "", color: "bg-pink-100 text-pink-700", label: "Certificado de conclusão" },
+    { icon: <FaRegClock className="text-red-600" />, color: "bg-[#eae5e0]", label: "8 Horas" },
+    { icon: <FaClipboardCheck className="text-blue-600" />, color: "bg-[#eae5e0]", label: "Exercícios ao final das aulas" },
+    { icon: <FaMapMarkedAlt className="text-yellow-600" />, color: "bg-[#eae5e0]", label: "Turismo e Cultura" },
+    { icon: <FaCalendarAlt className="text-green-600" />, color: "bg-[#eae5e0]", label: "Data de início: 15/05/2025" },
+    { icon: <FaCalendarCheck className="text-purple-600" />, color: "bg-[#eae5e0]", label: "Data de término: 15/06/2025" },
+    { icon: <FaCertificate className="text-pink-600" />, color: "bg-[#eae5e0]", label: "Certificado de conclusão" },
   ],
-  image: "/file.svg", // Substitua pelo caminho correto da imagem do curso
+  image: "/course_aula.jpeg", 
   teacher: {
-    name: "Vako Shvili",
-    desc: "Complete Web Design: from Figma to Webflow to Freelancing",
-    avatar: "/file.svg", // Substitua pelo caminho correto do avatar
+    name: "Rodrigo Alves",
+    desc: "",
   },
 };
 
@@ -70,51 +68,53 @@ export default function DetalheCurso() {
   return (
     <div className="min-h-screen flex bg-[#eae5e0]">
       <Sidebar />
-      
       <div className="flex-1 flex flex-col">
         <Header userName="Paula" />
-        <main className="flex-1 flex flex-col items-center justify-center p-8">
-          <div className="w-full max-w-4xl bg-white rounded-xl shadow-sm p-8">
-            <div className="h-8 rounded-t-xl mb-6 bg-gradient-to-r from-green-800 to-green-300" />
-            <h2 className="text-2xl font-bold text-center mb-2 text-black">{details.title}</h2>
-            <p className="text-center text-gray-700 mb-8">{details.description}</p>
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex flex-col gap-3 w-full md:w-1/2">
-                {details.infos.map((info, i) => (
-                  <div key={i} className="flex items-center gap-2 border rounded px-3 py-2 bg-gray-50">
-                    <span className={`material-icons ${info.color}`}>{info.icon}</span>
-                    <span className="text-sm text-black">{info.label}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-col items-center w-full md:w-1/2">
-                <img src={details.image} alt="Curso" className="rounded-lg w-56 h-40 object-cover mb-2" />
-                <div className="text-center text-xs text-gray-700 mt-2">
-                  Essa é a sua primeira aula <b className="text-black">{details.teacher.name}</b>!<br />
-                  {details.teacher.desc}
+        <main className="flex-1 flex flex-col items-center justify-start p-0">
+          {/* Título e subtítulo centralizados */}
+          <div className="w-full flex flex-col items-start mt-10 mb-2 pl-80">
+            <span className="text-base text-gray-500 mb-1">Aqui você pode gerenciar suas informações.</span>
+            <h1 className="text-2xl md:text-3xl font-bold text-black mb-4" style={{letterSpacing: 0.5}}>Esta é sua sala de aula</h1>
+          </div>
+          {/* Card principal ampliado e centralizado */}
+          <div className="w-full max-w-5xl bg-white rounded-xl shadow-lg p-0 overflow-hidden flex flex-col items-center justify-center" style={{minHeight: 0}}>
+            {/* Gradiente superior de ponta a ponta */}
+            <div className="h-20 rounded-t-xl bg-gradient-to-r from-lime-100 to-lime-950 w-full" />
+            <div className="p-12 flex flex-col items-center w-full">
+              <h2 className="text-3xl font-bold text-center mb-2 text-black">{details.title}</h2>
+              <p className="text-center text-gray-700 mb-8 text-base max-w-2xl mx-auto">{details.description}</p>
+              <div className="flex flex-row items-start gap-10 w-full justify-center">
+                {/* Labels esquerda */}
+                <div className="flex flex-col gap-3 w-80 max-w-xs">
+                  {details.infos.map((info, i) => (
+                    <div key={i} className="flex items-center gap-2 border border-black rounded px-3 py-2 bg-[#eae5e0] shadow-sm">
+                      {info.icon}
+                      <span className="text-sm text-black font-medium">{info.label}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="mt-6 flex flex-col items-center gap-4">
-                  <label className="flex items-center gap-2 text-black">
+                {/* Imagem e professor ao centro */}
+                <div className="flex flex-col items-center w-[420px]">
+                  <img src={details.image} alt="Curso" className="rounded-lg w-[420px] h-[220px] object-cover mb-3 border border-black" style={{ borderWidth: '1.5px' }} />
+                  <div className="text-center text-xs text-gray-700 mb-3">
+                    Esta é sua primeira aula com <b className="text-black">{details.teacher.name}</b>!<br />
+                    {details.teacher.desc}
+                  </div>
+                  <label className="flex items-center gap-2 text-black text-xs mb-2">
                     <input
                       type="checkbox"
                       checked={aulaChecked}
                       onChange={e => setAulaChecked(e.target.checked)}
-                      className="accent-green-600 w-5 h-5"
+                      className="accent-green-600 w-4 h-4"
                     />
-                    Aula
+                    Marcar aula como concluída
                   </label>
-
-
-               
-      <button
-        className={`${styles.finalizarButton} ${
-          aulaChecked ? styles.active : styles.disabled
-        }`}
-        disabled={!aulaChecked || loading}
-        onClick={handleFinalizar}
-      >
-        Finalizar Curso
-
+                  <button
+                    className={`px-8 py-2 rounded text-white font-semibold text-lg mt-1 ${aulaChecked ? "bg-green-700 hover:bg-green-800" : "bg-gray-400 cursor-not-allowed"}`}
+                    disabled={!aulaChecked || loading}
+                    onClick={handleFinalizar}
+                  >
+                    {loading ? "Finalizando..." : "Finalizar Curso"}
                   </button>
                 </div>
               </div>

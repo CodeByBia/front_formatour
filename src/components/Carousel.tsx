@@ -13,7 +13,20 @@ interface CarouselProps {
 
 export default function Carousel({ title, courses, onUnenroll }: CarouselProps) {
   const [start, setStart] = React.useState(0);
-  const visible = 2;
+ 
+  const [visible, setVisible] = React.useState(3);
+
+  React.useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 640) setVisible(1);
+      else if (window.innerWidth < 1024) setVisible(2);
+      else setVisible(3);
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const canPrev = start > 0;
   const canNext = start + visible < courses.length;
 
@@ -38,31 +51,30 @@ export default function Carousel({ title, courses, onUnenroll }: CarouselProps) 
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {courses.slice(start, start + visible).map((course, idx) => (
-          <div className={styles.seusCursos} key={course.id || idx}>
-            <CourseCard 
-              id={course.id}
-              image={course.image || ""}
-              title={course.title}
-              category={course.category || ''}
-              enrollmentId={course.enrollmentId}
-            />
-            {onUnenroll && course.enrolled && (
-              <CourseActions
-                enrolled={!!course.enrolled}
-                onEnroll={() => {}}
-                onUnenroll={() => onUnenroll(course.id)}
+      <div className="overflow-x-auto w-full">
+        <div className="flex gap-6 min-w-full" style={{scrollSnapType:'x mandatory'}}>
+          {courses.slice(start, start + visible).map((course, idx) => (
+            <div className={styles.seusCursos} key={course.id || idx} style={{scrollSnapAlign:'start', minWidth: 320}}>
+              <CourseCard 
+                id={course.id}
+                image={course.image || ""}
+                title={course.title}
+                category={course.category || ''}
+                enrollmentId={course.enrollmentId}
               />
-            )}
-          </div>
-        ))}
+              {onUnenroll && course.enrolled && (
+                <CourseActions
+                  enrolled={!!course.enrolled}
+                  onEnroll={() => {}}
+                  onUnenroll={() => onUnenroll(course.id)}
+                />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
 
-// crud 
-// gerenciamento estado global 
-// css completo

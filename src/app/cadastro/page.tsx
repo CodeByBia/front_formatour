@@ -67,14 +67,14 @@ export default function CadastroPage() {
             <div className="flex flex-col md:flex-row gap-4 mt-6">
               <button
                 type="button"
-                className="flex-1 border-2 border-[#179B5C] text-[#179B5C] py-2 rounded font-semibold hover:bg-[#e6f4ed] transition"
+                className="flex-1 border-2 border-green-700 text-green-700 py-2 rounded font-semibold hover:bg-green-50 hover:text-green-900 transition"
                 onClick={() => router.push("/login")}
               >
                 Voltar para Login
               </button>
               <button
                 type="button"
-                className="flex-1 bg-[#179B5C] text-white py-2 rounded font-semibold hover:bg-[#127a48] transition"
+                className="flex-1 bg-green-700 text-white py-2 rounded font-semibold hover:bg-green-800 transition"
                 onClick={() => router.push("/")}
               >
                 Cadastrar
