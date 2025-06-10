@@ -88,7 +88,7 @@ const CourseCard = ({ id, image, title, category, progresso }: Course) => {
                             <span className="text-xs font-medium text-green-600">{progresso}%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-1.5">
-                           <div className="bg-green-500 h-1.5 rounded-full" style={{ width: `${progresso}%` }}></div>
+                           <div className="bg-green-500 h-1.5 rounded-full" style={{ width: `${progresso}% ` }}></div>
                         </div>
                     </div>
                 )}

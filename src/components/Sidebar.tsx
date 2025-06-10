@@ -1,3 +1,5 @@
+// File: src/components/Sidebar.tsx
+
 "use client";
 import React from 'react';
 import { useRouter, usePathname } from "next/navigation";

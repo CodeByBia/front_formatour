@@ -31,6 +31,8 @@ export default function CadastroPage() {
                 value={nome}
                 onChange={e => setNome(e.target.value)}
                 placeholder="Nome completo"
+              />
+            </div>
             
 
             <div className="flex flex-col gap-1">

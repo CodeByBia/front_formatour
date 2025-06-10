@@ -11,33 +11,31 @@ export interface Course {
 }
 
 export const courseService = {
-  async listCourses(): Promise<Course[]> {
-    const res = await fetch("/api/courses", { method: "GET" });
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Erro ao buscar cursos:", res.status, errorText);
+  async getAllCourses(): Promise<Course[]> {
+    const courseResponse = await fetch('/api/courses', { method: 'GET' });
+    if (!courseResponse.ok) {
+      console.error('Falha ao obter lista de cursos:', courseResponse.status, await courseResponse.text());
       return [];
     }
-    const courses: Course[] = await res.json();
-    const enrollmentsRes = await fetch("/api/enrollments", { method: "GET" });
+    const courseList: Course[] = await courseResponse.json();
+
+    const enrollmentsRes = await fetch('/api/enrollments', { method: 'GET' });
     if (!enrollmentsRes.ok) {
-      console.error(
-        "Erro ao buscar enrollments:",
-        enrollmentsRes.status,
-        await enrollmentsRes.text()
-      );
-      return courses.map((c) => ({ ...c, enrolled: false }));
+      console.error('Erro ao buscar inscrições:', enrollmentsRes.status, await enrollmentsRes.text());
+      return courseList.map((course) => ({ ...course, enrolled: false }));
     }
+
     const enrolled: { courseId: string; enrollmentId: string }[] = await enrollmentsRes.json();
-    return courses.map((c) => {
-      const found = Array.isArray(enrolled) ? enrolled.find(e => e.courseId === c.id) : undefined;
+    return courseList.map((course) => {
+      const found = Array.isArray(enrolled) ? enrolled.find(e => e.courseId === course.id) : undefined;
       return {
-        ...c,
+        ...course,
         enrolled: !!found,
         enrollmentId: found ? found.enrollmentId : undefined
       };
     });
   },
+
   async enroll(courseId: string): Promise<boolean> {
     const res = await fetch("/api/enrollments", {
       method: "POST",
@@ -51,6 +49,7 @@ export const courseService = {
     }
     return true;
   },
+
   async unenroll(courseId: string): Promise<boolean> {
     const res = await fetch("/api/enrollments", {
       method: "DELETE",

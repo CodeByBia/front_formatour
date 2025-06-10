@@ -3,6 +3,7 @@ import React from "react";
 import CourseCard from "./CourseCard";
 import CourseActions from "./CourseActions";
 import { Course } from "../services/courseService";
+import styles from "./Carousel.module.css";
 
 interface CarouselProps {
   title: string;
@@ -37,10 +38,10 @@ export default function Carousel({ title, courses, onUnenroll }: CarouselProps) 
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {courses.slice(start, start + visible).map((course, idx) => (
-          <div key={course.id || idx}>
-            <CourseCard
+          <div className={styles.seusCursos} key={course.id || idx}>
+            <CourseCard 
               id={course.id}
               image={course.image || ""}
               title={course.title}
