@@ -68,7 +68,7 @@ export default function PerfilPage() {
                       <div className="text-gray-500 text-sm">{email}</div>
                     </div>
 
-                    <div className="flex justify-end ml-90">
+                    <div className="absolute justify-end ml-150">
                       <button
                         type="submit"
                         className="bg-lime-600 text-white px-6 py-2 rounded hover:bg-emerald-950 transition focus:outline-none focus:ring-2 focus:ring-black"
@@ -125,9 +125,7 @@ export default function PerfilPage() {
                       color="white"
                     />
                   </button>
-                  <span className="text-bold font-medium text-base ml-2">
-                    Sair
-                  </span>
+                  <p> asdas</p>
                 </div>
               </div>
             </div>

@@ -4,7 +4,8 @@
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import React, { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { enrollmentService } from "../../services/enrollmentService";
 
 // colocar o caminho correto do serviço de cursos
 const details = {
@@ -30,34 +31,17 @@ export default function DetalheCurso() {
   const [aulaChecked, setAulaChecked] = useState(false);
   // const [enrolled, setEnrolled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const params = useParams();
-  const courseId = Array.isArray(params?.id) ? params.id[0] : params?.id || ""; // objectId do curso
+  const searchParams = useSearchParams();
+  const enrollmentId = searchParams?.get("id") || "";
   const router = useRouter();
 
   useEffect(() => {
     async function fetchEnrollmentId() {
-      if (!courseId) return;
-      // Busca direta no Parse
-      const Parse = (await import('parse')).default;
-      const Enrollment = Parse.Object.extend('Enrollment');
-      const query = new Parse.Query(Enrollment);
-      query.equalTo('course', { __type: 'Pointer', className: 'Course', objectId: courseId });
-      query.equalTo('user', { __type: 'Pointer', className: '_User', objectId: 'ID_DO_USUARIO_FIXO' });
-      try {
-        const enrollment = await query.first();
-        if (!enrollment) {
-          alert('Nenhuma inscrição encontrada para este curso.');
-          // setEnrolled(false);
-          return;
-        }
-        // setEnrolled(true);
-      } catch (err) {
-        alert('Erro ao buscar inscrição: ' + (err instanceof Error ? err.message : JSON.stringify(err)));
-        // setEnrolled(false);
-      }
+      // Remover ou ajustar este trecho pois não é mais necessário buscar pelo courseId, já que agora usamos enrollmentId na URL
+      // Se quiser buscar dados da inscrição, use enrollmentId
     }
     fetchEnrollmentId();
-  }, [courseId]);
+  }, [enrollmentId]);
 
   // async function handleEnroll() {
   //   setLoading(true);
@@ -67,18 +51,10 @@ export default function DetalheCurso() {
   // }
 
   async function handleFinalizar() {
-    if (!courseId) return;
+    if (!enrollmentId) return;
     setLoading(true);
     try {
-      const response = await fetch(`/api/courses`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ objectId: courseId, progresso: "finalizado" })
-      });
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Erro na requisição: ${response.status} - ${errorText}`);
-      }
+      await enrollmentService.updateProgresso(enrollmentId, "finalizado");
       alert("Parabéns! Você concluiu o curso.");
       router.push("/");
     } catch (err) {

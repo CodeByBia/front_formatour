@@ -1,3 +1,6 @@
+
+//API route para atualizar o progresso de Enrollment no Back4App atualizada e corrigida
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Parse from '../../../services/parseSetup';
 
@@ -12,8 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const Enrollment = Parse.Object.extend('Enrollment');
       const query = new Parse.Query(Enrollment);
       const enrollment = await query.get(id);
-      const { aula1, progresso } = req.body;
-      if (typeof aula1 === 'boolean') enrollment.set('aula1', aula1);
+      const { progresso } = req.body;
       if (typeof progresso === 'string') enrollment.set('progresso', progresso);
       await enrollment.save();
       res.status(200).json({ success: true });
@@ -24,3 +26,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(405).json({ error: 'Method not allowed' });
   }
 }
+

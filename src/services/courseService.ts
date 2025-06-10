@@ -7,27 +7,35 @@ export interface Course {
   image?: string;
   category?: string;
   enrolled?: boolean;
+  enrollmentId?: string;
 }
 
 export const courseService = {
-async getAllCourses(): Promise<Course[]> {
+  async getAllCourses(): Promise<Course[]> {
     const courseResponse = await fetch('/api/courses', { method: 'GET' });
     if (!courseResponse.ok) {
       console.error('Falha ao obter lista de cursos:', courseResponse.status, await courseResponse.text());
       return [];
     }
     const courseList: Course[] = await courseResponse.json();
-    const userEnrollments = await fetch('/api/enrollments', { method: 'GET' });
-    if (!userEnrollments.ok) {
-      console.error('Falha ao obter inscrições:', userEnrollments.status, await userEnrollments.text());
+
+    const enrollmentsRes = await fetch('/api/enrollments', { method: 'GET' });
+    if (!enrollmentsRes.ok) {
+      console.error('Erro ao buscar inscrições:', enrollmentsRes.status, await enrollmentsRes.text());
       return courseList.map((course) => ({ ...course, enrolled: false }));
     }
-    const enrolledIds: string[] = await userEnrollments.json();
-    return courseList.map((course) => ({
-      ...course,
-      enrolled: Array.isArray(enrolledIds) ? enrolledIds.includes(course.id) : false,
-    }));
+
+    const enrolled: { courseId: string; enrollmentId: string }[] = await enrollmentsRes.json();
+    return courseList.map((course) => {
+      const found = Array.isArray(enrolled) ? enrolled.find(e => e.courseId === course.id) : undefined;
+      return {
+        ...course,
+        enrolled: !!found,
+        enrollmentId: found ? found.enrollmentId : undefined
+      };
+    });
   },
+
   async enroll(courseId: string): Promise<boolean> {
     const res = await fetch("/api/enrollments", {
       method: "POST",
@@ -41,6 +49,7 @@ async getAllCourses(): Promise<Course[]> {
     }
     return true;
   },
+
   async unenroll(courseId: string): Promise<boolean> {
     const res = await fetch("/api/enrollments", {
       method: "DELETE",
