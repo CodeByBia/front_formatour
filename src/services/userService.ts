@@ -1,6 +1,5 @@
 // src/services/userService.ts
 // Serviço para manipulação do usuário fixo
-import { parseClient } from './parseClient';
 
 export interface User {
   id: string;

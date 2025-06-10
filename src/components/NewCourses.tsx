@@ -1,10 +1,8 @@
-
 "use client";
 import React from "react";
 import CourseCard from "./CourseCard";
 import CourseActions from "./CourseActions";
 import { Course } from "../services/courseService";
-import CourseList from "../components/CourseList";
 
 
 interface NewCoursesProps {
