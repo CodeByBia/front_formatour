@@ -1,4 +1,4 @@
-// src/components/CourseActions.tsx
+
 "use client";
 import React from "react";
 

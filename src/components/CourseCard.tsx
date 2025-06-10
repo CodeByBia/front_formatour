@@ -47,7 +47,7 @@ export default function CourseCard({
         ) : null}
         <a
           href={`/detalhe-curso?id=${enrollmentId ?? id}`}
-          className="mt-4 px-4 py-2 bg-lime-900 text-white rounded-lg hover:bg-lime-700 transition text-sm flex items-center justify-center"
+          className="mt-4 px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition text-sm flex items-center justify-center"
         >
           <span className="ml-1 text-bold">Ver</span>
         </a>
