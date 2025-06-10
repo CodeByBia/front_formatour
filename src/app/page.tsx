@@ -8,7 +8,6 @@ import Carousel from "../components/Carousel";
 import NewCourses from "../components/NewCourses";
 import { courseService, Course } from "../services/courseService";
 
-
 export default function Home() {
   const [userCourses, setUserCourses] = useState<Course[]>([]);
   const [newCourses, setNewCourses] = useState<Course[]>([]);
@@ -61,7 +60,6 @@ export default function Home() {
               <NewCourses courses={newCourses} onEnroll={onEnroll} />
             </>
           )}
-          
         </main>
       </div>
     </div>
