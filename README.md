@@ -20,6 +20,9 @@ bun dev
 - npm install --save-dev typescript ts-node
 - npm install redux react-redux
 - npm install @reduxjs/toolkit
+- npm install --save-dev-devtools-extension  
+- npm install zustend
+- npm install react-icons --save
 
 ## Tipos de Commits
 O commit possui os elementos estruturais abaixo (tipos), que informam a intenção do seu commit ao utilizador(a) de seu código.
