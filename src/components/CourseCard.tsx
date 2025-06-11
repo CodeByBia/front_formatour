@@ -11,7 +11,6 @@ interface CourseCardProps {
   image: string;
   title: string;
   category: string;
-  progress?: number;
   enrollmentId?: string;
 }
 
@@ -20,7 +19,6 @@ export default function CourseCard({
   image,
   title,
   category,
-  progress,
   enrollmentId,
 }: Omit<CourseCardProps, "onView">) {
   return (
@@ -34,17 +32,17 @@ export default function CourseCard({
             {category}
           </div>
         </div>
-        {progress !== null ? (
-          <div className="flex items-center mt-2">
-            <input
-              type="range"
-              value={progress}
-              readOnly
-              className="flex-1 accent-lime-600"
-            />
-            <span className="ml-2 text-xs text-black">{progress}%</span>
-          </div>
-        ) : null}
+        <div className="flex items-center mt-2">
+          <input
+            type="range"
+            value={1}
+            min={0}
+            max={100}
+            readOnly
+            className="flex-1 accent-lime-600"
+          />
+          <span className="ml-2 text-xs text-black">1%</span>
+        </div>
         <a
           href={`/detalhe-curso?id=${enrollmentId ?? id}`}
           className="mt-4 px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition text-sm flex items-center justify-center"
