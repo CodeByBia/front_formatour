@@ -3,21 +3,24 @@
 
 "use client";
 
-import React from 'react';
+import React from "react";
 
-// A funcionalidade de roteamento foi substituída por um link padrão <a>
-// O componente <Image> foi substituído por uma tag <img> padrão.
 
 interface CourseCardProps {
   id: string;
   image: string;
   title: string;
   category: string;
-  progress?: number;
   enrollmentId?: string;
 }
 
-export default function CourseCard({ id, image, title, category, progress, enrollmentId }: Omit<CourseCardProps, 'onView'>) {
+export default function CourseCard({
+  id,
+  image,
+  title,
+  category,
+  enrollmentId,
+}: Omit<CourseCardProps, "onView">) {
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col border border-gray-200">
       <img src={image} alt={title} className="w-full h-32 object-cover" />
@@ -29,17 +32,22 @@ export default function CourseCard({ id, image, title, category, progress, enrol
             {category}
           </div>
         </div>
-        {progress !== null ? (
-          <div className="flex items-center mt-2">
-            <input type="range" value={progress} readOnly className="flex-1 accent-green-500" />
-            <span className="ml-2 text-xs text-black">{progress}%</span>
-          </div>
-        ) : null}
-       <a
-           href={`/detalhe-curso?id=${enrollmentId ?? id}`}
-          className="mt-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition text-sm flex items-center justify-center"
+        <div className="flex items-center mt-2">
+          <input
+            type="range"
+            value={1}
+            min={0}
+            max={100}
+            readOnly
+            className="flex-1 accent-lime-600"
+          />
+          <span className="ml-2 text-xs text-black">1%</span>
+        </div>
+        <a
+          href={`/detalhe-curso?id=${enrollmentId ?? id}`}
+          className="mt-4 px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition text-sm flex items-center justify-center"
         >
-        <span className="material-icons ml-1 text-base">Ver</span>
+          <span className="ml-1 text-bold">Ver</span>
         </a>
       </div>
     </div>

@@ -12,7 +12,7 @@ export default function Header({ userName }: { userName: string }) {
       </div>
       <div className="ml-6 flex items-center">
         <span className="mr-4 font-semibold text-black">Olá, {userName}</span>
-        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Avatar" className="w-10 h-10 rounded-full border-2 border-gray-300" />
+       {/*<FaRegUserCircle size={30} color="#619141" /> */}
       </div>
     </header>
   );
