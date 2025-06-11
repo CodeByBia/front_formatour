@@ -10,8 +10,8 @@ import { useLoadingStore } from "../store/useLoadingStore";
 export default function Home() {
   const [userCourses, setUserCourses] = useState<Course[]>([]);
   const [newCourses, setNewCourses] = useState<Course[]>([]);
-  const isLoading = useLoadingStore((state: any) => state.isLoading);
-  const setLoading = useLoadingStore((state: any) => state.setLoading);
+  const isLoading = useLoadingStore((state) => state.isLoading);
+  const setLoading = useLoadingStore((state) => state.setLoading);
 
   useEffect(() => {
     async function fetchCourses() {
@@ -22,6 +22,7 @@ export default function Home() {
       setLoading(false);
     }
     fetchCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function onEnroll(courseId: string) {
