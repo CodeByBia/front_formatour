@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import Carousel from "../components/Carousel";
 import NewCourses from "../components/NewCourses";
 import { courseService, Course } from "../services/courseService";
+// import DebugState from "./DebugState";
+
 
 export default function Home() {
   const [userCourses, setUserCourses] = useState<Course[]>([]);
@@ -39,7 +41,7 @@ export default function Home() {
     setNewCourses(all.filter((c: Course) => !c.enrolled));
     setIsLoading(false);
   }
-
+ 
   return (
     <div className="min-h-screen flex bg-[#eae5e0]">
       <Sidebar />
@@ -56,6 +58,7 @@ export default function Home() {
                 onUnenroll={onUnenroll}
               />
               <NewCourses courses={newCourses} onEnroll={onEnroll} />
+              {/* <DebugState /> */}
             </>
           )}
         </main>
@@ -63,3 +66,4 @@ export default function Home() {
     </div>
   );
 }
+
