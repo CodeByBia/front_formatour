@@ -1,115 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FormaTour
 
-## Getting Started  
+Sistema de cursos online para formação em turismo cultural.
 
-First, run the development server:
+## Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 15** (App Router, SSR/SSG, React 18)
+- **React 18**
+- **TypeScript**
+- **Tailwind CSS** (estilização)
+- **Zustand** (estado global para loading)
+- **Parse/Back4App** (backend BaaS para cursos, usuários e inscrições)
+- **Vercel** (deploy)
 
-## Dependências 
+## Instalação e Setup
 
-- npm install
-- npm install -g ts-node.
-- npm install --save-dev typescript ts-node
-- npm install redux react-redux
-- npm install @reduxjs/toolkit
-- npm install --save-dev-devtools-extension  
-- npm install zustend
-- npm install react-icons --save
+1. **Clone o repositório:**
+   ```powershell
+   git clone <url-do-repo>
+   cd front_formatour
+   ```
 
-## Tipos de Commits
-O commit possui os elementos estruturais abaixo (tipos), que informam a intenção do seu commit ao utilizador(a) de seu código.
+2. **Instale as dependências:**
+   ```powershell
+   npm install
+   ```
+   Isso instala:
+   - next
+   - react
+   - react-dom
+   - tailwindcss
+   - zustand
+   - typescript
+   - @types/react, @types/node, etc.
 
-- [fix] - Commits do tipo fix indicam que seu trecho de código commitado está solucionando um problema (bug fix), (se relaciona com o PATCH do versionamento semântico).
+3. **Configuração do ambiente:**
+   - As variáveis de ambiente do Parse/Back4App estão configuradas ao back4app privado da aplicação, que é possível acessar somente com o email de um dos integrantes do time por questão de segurança.
+   - As rotas da API (`/api/courses`, `/api/enrollments`, `/api/user`) estão conectadas ao backend.
 
-- [feat]- Commits do tipo feat indicam que seu trecho de código está incluindo um novo recurso (se relaciona com o MINOR do versionamento semântico).
+4. **Rodando localmente:**
+   ```powershell
+   npm run dev
+   ```
+   O app estará disponível em `http://localhost:3000`.
 
-- [docs] - Commits do tipo docs indicam que houveram mudanças na documentação, como por exemplo no Readme do seu repositório. (Não inclui alterações em código).
+5. **Build de produção:**
+   ```powershell
+   npm run build
+   npm start
+   ```
 
-- [style] - Commits do tipo style indicam que houveram alterações referentes a formatações de código, semicolons, trailing spaces, lint... (Não inclui alterações em código).
+## Estrutura de Pastas
 
-- [refactor] - Commits do tipo refactor referem-se a mudanças devido a refatorações que não alterem sua funcionalidade, como por exemplo, uma alteração no formato como é processada determinada parte da tela, mas que manteve a mesma funcionalidade, ou melhorias de performance devido a um code review.
+- `src/app/` — Páginas do Next.js (App Router)
+- `src/components/` — Componentes reutilizáveis (cards, carrossel, sidebar, etc.)
+- `src/services/` — Serviços para comunicação com a API/Parse
+- `src/store/` — Stores Zustand para estado global
+- `src/pages/api/` — Rotas de API (Next.js API routes)
+- `public/` — Imagens e assets estáticos
 
-- [build] - Commits do tipo build são utilizados quando são realizadas modificações em arquivos de build e dependências.
+## Funcionalidades
+ 
+- **Listagem de cursos** (novos e inscritos)
+- **Inscrição e desinscrição em cursos**
+- **Tela de detalhes do curso**
+- **Atualização de progresso do curso para finalizado** (atualmente fixa em 1%)
+- **Controle global de loading** (spinner com Zustand)
+- **Controle de fluxo de dados pro back4app** (com Zustand)
+- **Responsividade e acessibilidade**
+- **Deploy automático no Vercel**
 
-- [test] - Commits do tipo test são utilizados quando são realizadas alterações em testes, seja criando, alterando ou excluindo testes unitários. (Não inclui alterações em código)
+## Estado Global com Zustand
+- O loading global é controlado via `src/store/useLoadingStore.ts`.
+- Antes de qualquer chamada à API (ex: buscar cursos, inscrever/desinscrever), o estado `isLoading` é ativado (`setLoading(true)`), exibindo um spinner global na interface.
+- Para usar em qualquer componente:
+  ```typescript
+  import { useLoadingStore } from '../store/useLoadingStore';
+  const isLoading = useLoadingStore(state => state.isLoading);
+  const setLoading = useLoadingStore(state => state.setLoading);
+  ```
 
-- [chore] - Commits do tipo chore indicam atualizações de tarefas de build, configurações de administrador, pacotes... como por exemplo adicionar um pacote no gitignore. (Não inclui alterações em código)
+### Controle de fluxo de dados pro Back4App com Redux
+- O Redux é utilizado para fazer controle do fluxo de dados para o back4app
+- Centraliza os cursos: todos os cursos (inscritos ou não) são armazenados num único lugar acessível por qualquer componente.
+- Permite ações síncronas e assíncronas: como fetchCourses, que busca todos os cursos do Back4App sem que cada componente precise saber como essa lógica funciona
 
+## Scripts Disponíveis
 
-## Tipo de commit	     [Emojis]
+- `npm run dev` — Inicia o servidor de desenvolvimento
+- `npm run build` — Gera o build de produção
+- `npm start` — Inicia o servidor em modo produção
 
-Commit inicial	         🎉
+## Deploy
 
-Tag de versão	         🔖 
+- O deploy é feito automaticamente no Vercel a cada push na branch principal.
 
-Novo recurso	         ✨ 
+## Observações
 
-Lista de ideias 	     🔜
+- O backend (Parse/Back4App) está configurado, e todas as chamadas de api estão funcionais no backend.
+- O projeto segue boas práticas de acessibilidade e responsividade.
 
-Bugfix	                 🐛 
+## Contribuição
 
-Documentação	         📚
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature/fix: `git checkout -b minha-feature`
+3. Commit suas alterações: `git commit -m 'feat: minha feature'`
+4. Push para o branch: `git push origin minha-feature`
+5. Abra um Pull Request
 
-Testes	                 🧪 
+---
 
-Adicionando um teste	 ✅ 
-
-Teste de aprovação	     ✔️ 
-
-Acessibilidade	         ♿ 
-
-Texto	                 📝 
-
-Package.json em JS	     📦 
-
-Em progresso	         🚧 
-
-Arquivos de confi        🔧 
-
-remove dependência       ➖ 
-
-add uma dependência	     ➕ 
-
-Revertendo mudanças	     💥 
-
-alt revisao de cod	     👌 
-
-Refatoração	             ♻️
-
-Mover/Renomear	         🚚 
-
-
-
-## Um guia sobre estruturação de pastas para projetos em Next.js
-https://nextjs.org/docs/app/getting-started/project-structure#top-level-folders
-
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Este projeto foi desenvolvido como parte de um Trabalho de Graduação em Sistemas Para Internet. Seu objetivo é demonstrar a integração de tecnologias modernas para educação online, com foco em usabilidade, acessibilidade e boas práticas de desenvolvimento web.

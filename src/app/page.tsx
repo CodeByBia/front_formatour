@@ -6,69 +6,75 @@ import Carousel from "../components/Carousel";
 import NewCourses from "../components/NewCourses";
 import { courseService, Course } from "../services/courseService";
 import { userService } from "../services/userService";
-// import DebugState from "./DebugState";
-
+import { useLoadingStore } from "../store/useLoadingStore";
 
 export default function Home() {
-   const [nome, setNome] = useState("");
+  const [nome, setNome] = useState("");
   const [userCourses, setUserCourses] = useState<Course[]>([]);
   const [newCourses, setNewCourses] = useState<Course[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const isLoading = useLoadingStore((state) => state.isLoading);
+  const setLoading = useLoadingStore((state) => state.setLoading);
 
-   useEffect(() => {
-      userService.getUser().then((user) => 
-      {
-        setNome(user.name);
-        setIsLoading
-        (false);
-      });
-    }, []);
-  
-    // Estados para edição temporária
-    const [, setEditNome] = useState("");
-  
-    // Preenche os campos de edição quando os dados carregam
-    useEffect(() => {
-      setEditNome(nome);
-      
-    }, [nome]);
+  useEffect(() => {
+    userService.getUser().then((user) => {
+      setNome(user.name);
+      setLoading(false);
+    });
+  }, []);
 
+  // Estados para edição temporária
+  const [, setEditNome] = useState("");
+
+  // Preenche os campos de edição quando os dados carregam
+  useEffect(() => {
+    setEditNome(nome);
+  }, [nome]);
 
   useEffect(() => {
     async function fetchCourses() {
-      
-      setIsLoading(true);
+      setLoading(true);
       const all = await courseService.getAllCourses();
       setUserCourses(all.filter((c: Course) => c.enrolled));
       setNewCourses(all.filter((c: Course) => !c.enrolled));
-      setIsLoading(false);
+      setLoading(false);
     }
     fetchCourses();
   }, []);
 
   async function onEnroll(courseId: string) {
-    setIsLoading(true);
+    setLoading(true);
     await courseService.enroll(courseId);
     const all = await courseService.getAllCourses();
     setUserCourses(all.filter((c: Course) => c.enrolled));
     setNewCourses(all.filter((c: Course) => !c.enrolled));
-    setIsLoading(false);
+    setLoading(false);
   }
 
   async function onUnenroll(courseId: string) {
-    setIsLoading(true);
+    setLoading(true);
     await courseService.unenroll(courseId);
     const all = await courseService.getAllCourses();
     setUserCourses(all.filter((c: Course) => c.enrolled));
     setNewCourses(all.filter((c: Course) => !c.enrolled));
-    setIsLoading(false);
+    setLoading(false);
   }
- 
+
   return (
     <div className="min-h-screen flex bg-[#eae5e0]">
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header userName={nome} />
+        {isLoading && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="absolute inset-0 bg-white bg-opacity-0 backdrop-blur-sm transition-opacity" />
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-14 h-14 border-4 border-green-600 border-t-transparent rounded-full animate-spin shadow-lg" />
+              <span className="mt-3 text-green-900 font-semibold text-base drop-shadow-sm">
+                Carregando...
+              </span>
+            </div>
+          </div>
+        )}
         <main className="flex-1 p-8 bg-white rounded-xl shadow-sm mt-6">
           {isLoading ? (
             <div>Carregando...</div>
@@ -80,7 +86,6 @@ export default function Home() {
                 onUnenroll={onUnenroll}
               />
               <NewCourses courses={newCourses} onEnroll={onEnroll} />
-              {/* <DebugState /> */}
             </>
           )}
         </main>
@@ -88,4 +93,3 @@ export default function Home() {
     </div>
   );
 }
-
