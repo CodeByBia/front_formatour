@@ -20,7 +20,7 @@ export default function Home() {
       setNome(user.name);
       setLoading(false);
     });
-  }, []);
+  }, [setLoading]);
 
   // Estados para edição temporária
   const [, setEditNome] = useState("");
@@ -39,7 +39,7 @@ export default function Home() {
       setLoading(false);
     }
     fetchCourses();
-  }, []);
+  }, [setLoading]);
 
   async function onEnroll(courseId: string) {
     setLoading(true);
