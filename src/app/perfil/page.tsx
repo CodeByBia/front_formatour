@@ -11,7 +11,7 @@ export default function PerfilPage() {
   const [senha, setSenha] = useState("********");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+ useEffect(() => {
     userService.getUser().then((user) => {
       setNome(user.name);
       setEmail(user.email);
@@ -19,10 +19,22 @@ export default function PerfilPage() {
     });
   }, []);
 
+  // Estados para edição temporária
+  const [editNome, setEditNome] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+
+  // Preenche os campos de edição quando os dados carregam
+  useEffect(() => {
+    setEditNome(nome);
+    setEditEmail(email);
+  }, [nome, email]);
+
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    await userService.updateUser({ name: nome, email });
+    await userService.updateUser({ name: editNome, email: editEmail });
+    setNome(editNome);
+    setEmail(editEmail);
     setLoading(false);
     alert("Perfil salvo!");
   }
@@ -53,7 +65,7 @@ export default function PerfilPage() {
                 <p className="text-gray-700 text-sm mb-8">
                   Aqui você pode gerenciar suas informações.
                 </p>
-                <form onSubmit={handleSave} className="flex flex-col gap-8">
+                  <form onSubmit={handleSave} className="flex flex-col gap-8">
               
                   <div className="flex items-center gap-6 mb-4">
                     <div>
@@ -78,8 +90,8 @@ export default function PerfilPage() {
                     </label>
                     <input
                       className="rounded-md border border-gray-300 px-4 py-2 bg-white text-black focus:outline-none focus:ring-2 focus:ring-black"
-                      value={nome}
-                      onChange={(e) => setNome(e.target.value)}
+                      value={editNome}
+                      onChange={(e) => setEditNome(e.target.value)}
                       placeholder="Nome Completo"
                     />
                     <label className="text-sm font-medium text-black">
@@ -87,8 +99,8 @@ export default function PerfilPage() {
                     </label>
                     <input
                       className="rounded-md border border-gray-300 px-4 py-2 bg-white text-black focus:outline-none focus:ring-2 focus:ring-black"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={editEmail}
+                      onChange={(e) => setEditEmail(e.target.value)}
                       placeholder="Email"
                       type="email"
                     />
@@ -101,6 +113,7 @@ export default function PerfilPage() {
                       onChange={(e) => setSenha(e.target.value)}
                       placeholder="Senha"
                       type="password"
+                      disabled
                     />
                   </div>
                 </form>

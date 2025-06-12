@@ -5,13 +5,30 @@ import Header from "../components/Header";
 import Carousel from "../components/Carousel";
 import NewCourses from "../components/NewCourses";
 import { courseService, Course } from "../services/courseService";
+import { userService } from "../services/userService";
 import { useLoadingStore } from "../store/useLoadingStore";
 
 export default function Home() {
+  const [nome, setNome] = useState("");
   const [userCourses, setUserCourses] = useState<Course[]>([]);
   const [newCourses, setNewCourses] = useState<Course[]>([]);
   const isLoading = useLoadingStore((state) => state.isLoading);
   const setLoading = useLoadingStore((state) => state.setLoading);
+
+  useEffect(() => {
+    userService.getUser().then((user) => {
+      setNome(user.name);
+      setLoading(false);
+    });
+  }, [setLoading]);
+
+  // Estados para edição temporária
+  const [, setEditNome] = useState("");
+
+  // Preenche os campos de edição quando os dados carregam
+  useEffect(() => {
+    setEditNome(nome);
+  }, [nome]);
 
   useEffect(() => {
     async function fetchCourses() {
@@ -22,8 +39,7 @@ export default function Home() {
       setLoading(false);
     }
     fetchCourses();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setLoading]);
 
   async function onEnroll(courseId: string) {
     setLoading(true);
@@ -47,7 +63,7 @@ export default function Home() {
     <div className="min-h-screen flex bg-[#eae5e0]">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        <Header userName="Paula" />
+        <Header userName={nome} />
         {isLoading && (
           <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="absolute inset-0 bg-white bg-opacity-0 backdrop-blur-sm transition-opacity" />
